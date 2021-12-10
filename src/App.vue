@@ -23,20 +23,25 @@
 </template>
 
 <script>
-import mods from './mods.json';
 export default {
   name: 'app',
   data () {
     return {
-      mods: mods
+      mods: []
     }
   },
   methods:{
     check(id, enabled)
     {
-      this.axios.post('http://localhost/minecraft/src/api.php',{id:id, enabled:!enabled}).then((response) => {
+      this.axios.post('http://localhost/minecraft/server/public/api/save.php',{id:id, enabled:!enabled}).then((response) => {
       })
     }
+  },
+  created(){
+    this.axios.post('http://localhost/minecraft/server/public/api/get.php')
+      .then(({data}) => {
+        this.mods = data
+      })
   }
 }
 </script>
@@ -74,7 +79,11 @@ tr:nth-child(even) {
     background-color: #ddd;
 }
 
-input[type=checkbox]{
-  margin-left:50px;
+
+input[type=checkbox] {
+    width: 25px;
+    height: 25px;
+    -moz-appearance: none;
+    margin-left:50px;
 }
 </style>
