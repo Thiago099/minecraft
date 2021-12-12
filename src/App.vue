@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <tr v-for="mod in mods" :key="mod.link">
+    <tr v-for="(mod, i) in mods" :key="mod.link">
         <td>
             <input type="checkbox" v-model="mod.enabled" @click="check(mod.id,mod.enabled)">
         </td>
@@ -18,6 +18,9 @@
                 {{mod.description}}
             </p>
         </td>
+        <!-- <td v-show="i%10 == 0">
+          {{ i/10 }}
+        </td> -->
     </tr>  
   </div>
 </template>
@@ -33,8 +36,13 @@ export default {
   methods:{
     check(id, enabled)
     {
-      this.axios.post('http://localhost/minecraft/server/public/api/save.php',{id:id, enabled:!enabled}).then((response) => {
-      })
+      this.axios.post(
+        'http://localhost/minecraft/server/public/api/save.php',
+        {
+          id: id,
+          enabled:!enabled
+        })
+        .then((response) => {})
     }
   },
   created(){
